@@ -1,0 +1,4 @@
+15
+24
+LLSUB_RANK=15: WARNING:tensorflow:From train_class_grid.py:46: The name tf.set_random_seed is deprecated. Please use tf.compat.v1.set_random_seed instead.
+LLSUB_RANK=15: 

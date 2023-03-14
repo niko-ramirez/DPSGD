@@ -8,7 +8,7 @@ DATASET=$2
 MODEL=$3
 ARGS="$4 $5 $6 $7"
 DIM=(32)
-LR=(0.01)
+LR=(0.1)
 SEED=(12306)
 
 if [ ${DATASET} == "am" ]
@@ -38,7 +38,7 @@ do
                 do
                     option="--dataset ${DATASET} --dim ${dim} --mode ${MODEL} --learning_rate ${lr}
                             --alpha ${alpha} --beta ${alpha} --layer ${layer} --rel_update
-                            --epochs 1000 --randomseed ${seed} ${ARGS}"
+                            --epochss 1000 --randomseed ${seed} ${ARGS}"
                     cmd="CUDA_VISIBLE_DEVICES=${GPU} python train_class.py ${option}"
                     echo $cmd
                     eval $cmd

@@ -1,0 +1,24 @@
+2023-02-27 16:20:30,849 NORM: 0.6, NOISE= 0.25, LEARNING_RATE: 0.02
+2023-02-27 16:20:32,365 Epoch: 1 train_loss= 0.69386
+2023-02-27 16:20:33,106 Classification Precision 1: 12.946
+2023-02-27 16:20:33,107 Classification NDCG 1: 12.946
+2023-02-27 16:20:33,208 Classification Precision 3: 14.856
+2023-02-27 16:20:33,209 Classification NDCG 3: 14.478
+2023-02-27 16:20:33,320 Classification Precision 5: 14.539
+2023-02-27 16:20:33,321 Classification NDCG 5: 14.600
+2023-02-27 16:20:33,322 Train Accuracy: 14.540
+2023-02-27 16:20:33,423 Classification Precision 1: 14.870
+2023-02-27 16:20:33,424 Classification NDCG 1: 14.870
+2023-02-27 16:20:33,525 Classification Precision 3: 15.019
+2023-02-27 16:20:33,527 Classification NDCG 3: 15.084
+2023-02-27 16:20:33,633 Classification Precision 5: 14.900
+2023-02-27 16:20:33,633 Classification NDCG 5: 15.260
+2023-02-27 16:20:33,635 Valid Accuracy: 14.900
+2023-02-27 16:20:34,434 Classification Precision 1: 13.890
+2023-02-27 16:20:34,435 Classification NDCG 1: 13.890
+2023-02-27 16:20:35,298 Classification Precision 3: 14.476
+2023-02-27 16:20:35,299 Classification NDCG 3: 14.401
+2023-02-27 16:20:36,119 Classification Precision 5: 14.234
+2023-02-27 16:20:36,119 Classification NDCG 5: 14.529
+2023-02-27 16:20:36,124 Test Accuracy: 14.230
+2023-02-27 16:20:40,869 Optimization Finished! Best Valid Acc: 14.9 Test: 13.89 13.89 14.48 14.4 14.23 14.53

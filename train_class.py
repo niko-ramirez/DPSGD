@@ -13,16 +13,25 @@ from models import AutoRGCN_Align
 import random
 import logging
 import os
+import tensorflow_privacy
 
+from tensorflow_privacy.privacy.analysis import compute_dp_sgd_privacy, rdp_accountant
+from tensorflow_privacy.privacy.analysis.rdp_accountant import compute_rdp, get_privacy_spent
 
+# optimizer = tensorflow_privacy.DPAdamGaussianOptimizer(
+#                 l2_norm_clip=1.5,
+#                 noise_multiplier=1.3,
+#                 num_microbatches=250,
+#                 learning_rate=.25)
 # Settings
 flags = tf.app.flags
 FLAGS = flags.FLAGS
-flags.DEFINE_string('dataset', 'aifb', 'Dataset: am, wordnet.')
+flags.DEFINE_string('dataset', 'fb15k', 'Dataset: am, wordnet.')
 flags.DEFINE_string('mode', 'None', 'KE method for GCN: TransE, TransH, TransD, DistMult, RotatE, QuatE')
-flags.DEFINE_string('optim', 'Adam', 'Optimizer: GD, Adam')
+# flags.DEFINE_string('optim', 'Adam', 'Optimizer: GD, Adam')
+flags.DEFINE_string('optim', 'DPSGD', 'Optimizer: DPSGD, GD, Adam')
 flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
-flags.DEFINE_integer('epochs', 500, 'Number of epochs to train.')
+flags.DEFINE_integer('epochss', 500, 'Number of epochs to train.')
 flags.DEFINE_float('dropout', 0., 'Dropout rate (1 - keep probability).')
 flags.DEFINE_float('gamma', 3.0, 'Hyper-parameter for margin based loss.')
 flags.DEFINE_integer('num_negs', 5, 'Number of negative samples for each positive seed.')
@@ -41,6 +50,22 @@ flags.DEFINE_string('embed', "random", 'init embedding for entities')
 np.random.seed(FLAGS.randomseed)
 random.seed(FLAGS.randomseed)
 tf.set_random_seed(FLAGS.randomseed)
+
+eps, order = compute_dp_sgd_privacy.compute_dp_sgd_privacy(n=1344,
+                                              batch_size=1344,
+                                              noise_multiplier=2.0,
+                                              epochs=400,
+                                              delta=1e-4)
+
+print (eps)
+orders = [1 + x / 10. for x in range(1, 1000)] + list(range(12, 64))
+rdp = compute_rdp(q=1.0,
+                  noise_multiplier=2.0,
+                  steps=400,
+                  orders=orders)
+
+epsilon = get_privacy_spent(orders, rdp, target_delta=1e-4)[0]
+print (epsilon)
 
 if FLAGS.save:
     nsave = "log/{}/{}".format(FLAGS.dataset, FLAGS.mode)
@@ -65,6 +90,9 @@ logging.getLogger().setLevel(logging.INFO)
 
 # Load data
 adj, num_ent, train, test, valid, y = load_data_class(FLAGS)
+logging.info("Train len: {}".format(len(train)))
+logging.info("Test len: {}".format(len(test)))
+logging.info("Valid len: {}".format(len(valid)))
 train = [train, y]
 rel_num = np.max(adj[2][:, 1]) + 1
 print("Relation num: ", rel_num)
@@ -77,6 +105,10 @@ num_negs = FLAGS.num_negs
 class_num = y.shape[1]
 print("Entity num: ", num_ent)
 print("Class num: ", class_num)
+
+logging.info("entity num: {}".format(num_ent))
+logging.info("class num: {}".format(class_num))
+
 
 if FLAGS.dataset == "fb15k":
     task = "label"
@@ -115,7 +147,8 @@ acc_best = 0.
 test_acc = 0.
 
 # Train model
-for epoch in range(FLAGS.epochs):
+for epoch in range(FLAGS.epochss):
+
     # Construct feed dictionary
     feed_dict = construct_feed_dict(1.0, support, placeholders)
     feed_dict.update({placeholders['dropout']: FLAGS.dropout})
@@ -151,3 +184,18 @@ for epoch in range(FLAGS.epochs):
 
 logging.info("Optimization Finished! Best Valid Acc: {} Test: {}".format(
                 round(acc * 100,2), " ".join([str(round(i*100,2)) for i in result])))
+
+
+# eps, order = compute_dp_sgd_privacy.compute_dp_sgd_privacy(n=len(train[0]),
+#                                               batch_size=len(train[0]),
+#                                               noise_multiplier=100.0,
+#                                               epochs=FLAGS.epochss,
+#                                               delta=1e-4)
+
+# orders = [1 + x / 10. for x in range(1, 100)] + list(range(12, 64))
+# rdp = compute_rdp(q=1.0,
+#                   noise_multiplier=FLAGS.noise_multiplier,
+#                   steps=FLAGS.epochss,
+#                   orders=orders)
+
+# logging.info("Final RDP-eps: {}".format(eps))  

@@ -1,6 +1,8 @@
 from layers import *
 from metrics import align_loss, class_loss, label_loss
 from inits import *
+import tensorflow_privacy
+from tensorflow.compat.v1.losses import Reduction
 
 flags = tf.app.flags
 FLAGS = flags.FLAGS
@@ -120,7 +122,12 @@ class AutoRGCN_Align(Model):
         elif FLAGS.optim == "Adam":
             self.optimizer = tf.train.AdamOptimizer(learning_rate=FLAGS.learning_rate)
         else:
-            exit("Wrong optimizer")
+            self.optimizer = tensorflow_privacy.DPAdamGaussianOptimizer(
+                l2_norm_clip=FLAGS.l2_norm_clip,
+                noise_multiplier=FLAGS.noise_multiplier_flag,
+                num_microbatches=1,
+                learning_rate=FLAGS.learning_rate)
+            # exit("Wrong optimizer")
 
         self.build()
 

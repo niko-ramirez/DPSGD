@@ -33,7 +33,7 @@ do
                     for wrel in "${WREL[@]}"
                     do
                         option="--dataset ${dataset} --dim 200 --mode ${MODEL} --learning_rate 0.01
-                                --alpha ${alpha} --beta ${alpha} --layer ${layer} --auto --rel_update --epochs 20000
+                                --alpha ${alpha} --beta ${alpha} --layer ${layer} --auto --rel_update --epochs 500
                                 --randomseed ${seed} --rel_weight ${wrel} --rel_seed ${srel} ${ARGS}"
                         cmd="CUDA_VISIBLE_DEVICES=${GPU} python train_rel_align.py ${option}"
                         echo $cmd

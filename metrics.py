@@ -2,7 +2,7 @@ import tensorflow as tf
 import numpy as np
 import scipy.spatial
 from scipy.sparse import isspmatrix
-
+from tensorflow.compat.v1.losses import Reduction
 
 def get_placeholder_by_name(name):
     try:
@@ -55,6 +55,7 @@ def class_loss(embeddings, test, y):
     else:
         y_test = y[test]
         y_true = tf.reshape(tf.argmax(y_test, 1), (1,-1))
+    # loss = tf.compat.v1.losses.sigmoid_cross_entropy(y_test, y_pre, reduction=Reduction.NONE)
     loss = tf.nn.softmax_cross_entropy_with_logits_v2(labels=y_test, logits=y_pre)
     return tf.reduce_mean(loss)
 
@@ -64,6 +65,7 @@ def label_loss(embeddings, test, y):
         y_test = y[test].todense()
     else:
         y_test = y[test]
+    # loss = tf.compat.v1.losses.sigmoid_cross_entropy(y_test, y_pre, reduction=Reduction.NONE)
     loss = tf.nn.sigmoid_cross_entropy_with_logits(labels=y_test, logits=y_pre)
     return tf.reduce_mean(loss)
 

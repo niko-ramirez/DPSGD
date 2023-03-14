@@ -1,0 +1,26 @@
+2023-01-29 20:49:44,453 From train_align.py:84: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2023-01-29 20:49:44,463 From train_align.py:85: The name tf.placeholder_with_default is deprecated. Please use tf.compat.v1.placeholder_with_default instead.
+
+2023-01-29 20:49:44,470 From C:\Users\nikor\conda_test\KE-GCN\models.py:123: The name tf.train.AdamOptimizer is deprecated. Please use tf.compat.v1.train.AdamOptimizer instead.
+
+2023-01-29 20:49:44,470 From C:\Users\nikor\conda_test\KE-GCN\models.py:148: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+
+2023-01-29 20:49:44,470 From C:\Users\nikor\conda_test\KE-GCN\inits.py:34: The name tf.truncated_normal is deprecated. Please use tf.random.truncated_normal instead.
+
+2023-01-29 20:49:44,512 From C:\Users\nikor\conda_test\KE-GCN\layers.py:152: The name tf.summary.histogram is deprecated. Please use tf.compat.v1.summary.histogram instead.
+
+2023-01-29 20:49:44,646 From C:\Users\nikor\Anaconda3\envs\dpsgd\lib\site-packages\tensorflow_core\python\ops\math_grad.py:1375: where (from tensorflow.python.ops.array_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use tf.where in 2.0, which has the same broadcast rule as np.where
+2023-01-29 20:49:46,277 From C:\Users\nikor\conda_test\KE-GCN\models.py:172: The name tf.get_collection is deprecated. Please use tf.compat.v1.get_collection instead.
+
+2023-01-29 20:49:46,277 From C:\Users\nikor\conda_test\KE-GCN\models.py:172: The name tf.GraphKeys is deprecated. Please use tf.compat.v1.GraphKeys instead.
+
+2023-01-29 20:49:46,289 From C:\Users\nikor\conda_test\KE-GCN\metrics.py:9: The name tf.get_default_graph is deprecated. Please use tf.compat.v1.get_default_graph instead.
+
+2023-01-29 20:49:54,278 From train_align.py:112: The name tf.Session is deprecated. Please use tf.compat.v1.Session instead.
+
+2023-01-29 20:49:55,353 From train_align.py:113: The name tf.global_variables_initializer is deprecated. Please use tf.compat.v1.global_variables_initializer instead.
+
+2023-01-29 20:50:18,640 Epoch: 1 train_loss= 2.70255

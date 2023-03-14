@@ -38,7 +38,7 @@ do
             do
                 option="--dataset ${dataset} --dim ${dim} --mode ${MODEL} --learning_rate 0.01
                         --alpha ${alpha} --beta ${alpha} --layer ${layer} --rel_update
-                        --epochs 20000 --randomseed ${seed} ${ARGS}"
+                        --epochs 1500 --randomseed ${seed} ${ARGS}"
                 cmd="CUDA_VISIBLE_DEVICES=${GPU} python train_align.py ${option}"
                 echo $cmd
                 eval $cmd
